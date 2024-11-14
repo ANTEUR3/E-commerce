@@ -1,5 +1,10 @@
 import express from "express";
-import { PORT,mongoDBURL  } from "./config.js";
+
+import 'dotenv/config';
+import dotenv from 'dotenv';
+import {config} from 'dotenv';
+dotenv.config();
+
 import mongoose from "mongoose";
 import productRoutes from "./routes/productRoutes.js";
 import userRouter from "./routes/userRouter.js";
@@ -11,6 +16,10 @@ import cors from "cors"
  import { Server  } from "socket.io";
  import http from "http"
 const app=express();
+
+const PORT=process.env.PORT;
+const mongoDBURL=process.env.mongoDBURL;
+
 app.use(express.json())
 const server = http.createServer(app);
 app.use(cors())
@@ -35,7 +44,7 @@ app.get('/:token',async (request,response)=>{
     try {
         const {token}=request.params;
      await user.updateOne({token:token},{$set:{isVerified:true}})
-     response.redirect('http://localhost:5173/Singin');   
+     response.redirect(`http://localhost:${PORT}/Singin`);   
        return response.status(234).send('email verified successfully');
      
     } catch (error) {
