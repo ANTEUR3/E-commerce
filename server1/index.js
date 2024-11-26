@@ -5,6 +5,8 @@ import dotenv from 'dotenv';
 import {config} from 'dotenv';
 dotenv.config();
 
+import braintree from "braintree";
+
 import mongoose from "mongoose";
 import productRoutes from "./routes/productRoutes.js";
 import userRouter from "./routes/userRouter.js";
@@ -31,6 +33,47 @@ app.get('/',(request,response)=>{
     console.log('hello')
     return response.status(234).send('e-commerce project');
 }) 
+
+const gateway = new braintree.BraintreeGateway({
+    environment: braintree.Environment.Sandbox, // Replace with Environment.Production for live transactions
+    merchantId: '9bdq4syrsywtdydv',
+    publicKey: 'byr2m3tb94snsx2z',
+    privateKey: '3cff320abce85f8503c4816df7fd5c57'
+});
+
+
+app.get('/clientToken', async (request, response) => {
+    try {
+      const Token = await gateway.clientToken.generate();
+      return response.status(201).json({ token: Token });
+    } catch (error) {
+      console.error(error);
+      return response.status(500).send('Error generating client token');
+    }
+  });
+
+  app.post('/payment', async (req, res) => {
+    const {  amount,paymentMethodNonce } = req.body;
+    try {
+      const result = await gateway.transaction.sale({
+        amount,
+        paymentMethodNonce,
+        options: {
+          submitForSettlement: true,
+        },
+      });
+  
+      if (result.success) {
+        res.json({ message: 'Payment successful' });
+      } else {
+        res.status(400).json({ error: result.message });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Payment failed' });
+    }
+  });
+
 
 
 app.use('/product',productRoutes)
@@ -96,4 +139,5 @@ io.on('connection',(socket)=>{
 
       
 })
+
 
