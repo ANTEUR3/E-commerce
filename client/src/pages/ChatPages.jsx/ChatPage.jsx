@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { AuthContext } from '../../Context/AuthContext'
 import { useContext } from 'react';
 import UsersProfiles from '../../components/ChatComponents/UsersProfiles';
@@ -32,8 +32,10 @@ const ChatPage = () => {
     },[user])
     const [selectedUser,setSelectedUser]=useState(null)
     const handleChangeSelectedUser=(user)=>{
-        const newSelectedUser=users.find((userF)=>userF._id==user)
-          setSelectedUser(newSelectedUser)
+       
+            const newSelectedUser=users.find((userF)=>userF._id==user)
+              setSelectedUser(newSelectedUser)
+        
     }
     return (
         

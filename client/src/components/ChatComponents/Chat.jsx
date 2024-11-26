@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { MdEmail, MdPhone, MdLocalPrintshop } from "react-icons/md";
 import { IoLocation } from "react-icons/io5";
@@ -98,7 +98,7 @@ const Chat = ({ userSelected, socket }) => {
     setMessagesDisplay(newMessages);
   }, [userSelected]);
 
-  const displayMessages = messagesDisplay.map((msg, index) => {
+  const displayMessages =useMemo(()=>messagesDisplay.map((msg, index) => {
     return (
       <div
         ref={scrolRef}
@@ -118,7 +118,7 @@ const Chat = ({ userSelected, socket }) => {
         </div>
       </div>
     );
-  });
+  }),[messagesDisplay]) 
 
   return (
     <div className="w-[77%] pl-[30px] pt-[30px] flex justify-start items-start h-screen border-2 ">
