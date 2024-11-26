@@ -9,7 +9,7 @@
     <h2>Admistration functionalities</h2>
      <p>- The admin can </p>
     <p>- brows all users accounts  </p>
-    <p>- brows all product and update  </p>
+    <p>- brows all product and update (CRUD operations )  </p>
   </li>
   <li>
     <h2>E-commerce functionalities</h2>
@@ -21,7 +21,7 @@
   </li>
    <li>
     <h2>Real time chat app</h2>
-    <p>- user can send and recieve messages from other users in real time </p>
+    <p>- user can send and recieve messages from other users in real time using Socket.io </p>
   </li>
 </ul>
 :
