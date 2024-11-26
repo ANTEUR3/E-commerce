@@ -32,8 +32,6 @@
     <p>React.js with Tailwindcss </p>
   </li>
     <li>
-      
-
     <h2>Backend</h2>
     <p> Node.js and Express.js for backend functionalities</p>
   </li>
@@ -43,7 +41,7 @@
     <h2>  Databases</h2>
     <p> MongoDB for storing products, users,purchases and  messages </p>
   </li>
-
+</ul>
 
 </ul>
 
