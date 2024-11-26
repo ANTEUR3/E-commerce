@@ -24,4 +24,30 @@
     <p>- user can send and recieve messages from other users in real time using Socket.io </p>
   </li>
 </ul>
-:
+
+<h2>Tech Stack</h2>
+<ul>
+  <li>
+    <h2>Frontend</h2>
+    <p>React.js with Tailwindcss </p>
+  </li>
+    <li>
+      
+
+    <h2>Backend</h2>
+    <p> Node.js and Express.js for backend functionalities</p>
+  </li>
+   <li>
+      
+
+    <h2>  Databases</h2>
+    <p> MongoDB for storing products, users,purchases and  messages </p>
+  </li>
+
+
+</ul>
+
+
+
+
+
