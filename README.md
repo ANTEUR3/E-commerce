@@ -1,9 +1,9 @@
 <h1>E-commerce Platform</h1>
 
-<h2>Overview</h2>
+<h1>Overview</h1>
 <p>An e-commerce platform that allows users to purchase electronic products, and includes many functions <br>such as a real-time chat application, and a virtual payment gateway.<br>
   This platform is built by (React.js , Node.js , MongoDB and Express.js)</p>
-<h2>Features</h2>
+<h1>Features</h1>
 <ul>
    <li>
     <h2>Admistration functionalities</h2>
@@ -25,7 +25,7 @@
   </li>
 </ul>
 
-<h2>Tech Stack</h2>
+<h1>Tech Stack</h1>
 <ul>
   <li>
     <h2>Frontend</h2>
