@@ -366,7 +366,10 @@ const [error,setErorr]=useState('')
               <span className="text-black font-semibold">{product.name}</span>
             </p>
             <div className="w-full flex justify-start items-center px-5 ">
-              <div className="flex flex-col gap-y-5 justify-start items-center pt-3 border w-1/2">
+              <div className="relative flex flex-col gap-y-5 justify-start items-center pt-3 border w-1/2">
+              <button  onClick={()=>{productDispatch({payload:null})}} className="absolute flex flex-col justify-center items-center py-1  w-[120px] left-3 top-3  rounded-lg text-black font-bold text-lg bg-gray-200 "> 
+                 Back
+            </button>
                 <div className="flex flex-col justify-center items-center px-6 py-6 w-full ">
                   <img
                     src={product.imgUrl}

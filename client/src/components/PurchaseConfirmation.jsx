@@ -21,7 +21,15 @@ const PurchaseConfirmation = ({quantity}) => {
   const {user,dispatch}=useContext(AuthContext);
   const {product,productDispatch,productListDispatch}=useContext(ProductContext);
   const [Error,setError]=useState('')
+const [discount,setDiscount]=useState(0);
   const navigate=useNavigate();
+  useEffect(()=>{
+      if(quantity>=3){
+        setDiscount(30)
+      }
+  },[quantity])
+
+
 
   const ConfirmPurchase=()=>{
     
@@ -100,16 +108,16 @@ console.log(response.data.newBalance.balance)
                     <div className="col-span-1 px-4  border-gray-500 pt-2">
                     <div className="flex justify-between items-center w-full font-semibold">
                          
-                    <p className='text-2xl px-2 text-orange-600'>{product.price * quantity}$ -- {product.price*quantity -((product.price*quantity)*5/100) }$</p>
+                    <p className='text-2xl px-2 text-orange-600'>{product.price * quantity}$ -- {product.price*quantity -discount}$</p>
 
                         </div>
                         <div className="flex justify-between items-center w-3/4 font-semibold">
-                          <p className='text-2xl px-2 text-blue-600'>5%</p>
+                          <p className='text-2xl px-2 text-blue-600'>{quantity>=3 ?'30$':'0$'}</p>
                           
                         </div>
                     </div>
                  </div>
-                <div onClick={ConfirmPurchase} className='w-3/4 mb-3 mx-auto rounded-lg font-semibold text-white text-2xl bg-orange-600 flex justify-center items-center py-2 hover:bg-green-700 cursor-pointer'>Confirm Your Purchase</div>
+                <Link to={`/payment/${quantity}/${product._id}`} className='w-3/4 mb-3 mx-auto rounded-lg font-semibold text-white text-2xl bg-orange-600 flex justify-center items-center py-2 hover:bg-green-700 cursor-pointer'>Confirm Your Purchase</Link>
                 <Link  onClick={()=>{productDispatch({payload:null})}} className='w-3/4 mx-auto rounded-lg font-semibold text-white text-2xl bg-gray-400 flex justify-center items-center py-2 hover:bg-black cursor-pointer'>Back And Cancel</Link>                 
 
              </div>

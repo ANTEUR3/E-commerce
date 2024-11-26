@@ -10,8 +10,7 @@ import { GrNext } from "react-icons/gr";
 import { GrPrevious } from "react-icons/gr";
 
 const ProductListe = () => {
-  const { productContext, productListDispatch, product, productDispatch } =
-    useContext(ProductContext);
+  const { productContext, productListDispatch, product, productDispatch } =useContext(ProductContext);
   const { user, dispatch } = useContext(AuthContext);
 
   const [productList, setProductList] = useState([]);
@@ -128,6 +127,7 @@ useEffect(()=>{console.log(index,maxIndex)},[index])
       }
     });
   };
+  useEffect(()=>{console.log(productContext)},[productContext])
   const [productType, setProductType] = useState("all");
   useEffect(() => {
     setProductPrice(0);
