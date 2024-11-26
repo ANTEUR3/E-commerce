@@ -7,16 +7,21 @@
 <ul>
    <li>
     <h2>Admistration functionalities</h2>
-     <p>The admin can </p>
+     <p>- The admin can </p>
     <p>- brows all users accounts  </p>
     <p>- brows all product and update  </p>
   </li>
   <li>
     <h2>E-commerce functionalities</h2>
-    <p>users can brows products , add to cart and buy </p>
+    <p>- users can brows products , add to cart and buy </p>
   </li>
    <li>
-    <h2>Authentification services</h2>
-    <p>users can Singup only with an existing email </p>
+    <h2>Braintree Payment Gateway</h2>
+    <p>- the project wrap an payment gateway using Braintree gateway </p>
+  </li>
+   <li>
+    <h2>Real time chat app</h2>
+    <p>- user can send and recieve messages in real time </p>
   </li>
 </ul>
+:
