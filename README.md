@@ -21,7 +21,7 @@
   </li>
    <li>
     <h2>Real time chat app</h2>
-    <p>- user can send and recieve messages in real time </p>
+    <p>- user can send and recieve messages from other users in real time </p>
   </li>
 </ul>
 :
