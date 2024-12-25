@@ -20,6 +20,7 @@ route.post('/',async (request,response)=>{
           const userAuth=await user.updateOne({_id:userId},{$inc:{balance:-Total}})
           const newUser=await user.findById(userId)
           const productBuy=await product.updateOne({_id:productId},{$inc:{quantity:-quantityP}})
+          console.log('purchase !!')
         return response.status(201).json({purchaseCreate,newBalance:newUser })
     } catch (error) {
         console.log(error.message)

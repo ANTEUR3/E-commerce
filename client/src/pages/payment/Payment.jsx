@@ -1,4 +1,4 @@
-import React, { useContext, useMemo,useState } from 'react'
+import React, { useCallback, useContext, useMemo,useState } from 'react'
 import { useEffect } from 'react';
 import dropin from "braintree-web-drop-in";
 import { useRef } from 'react';
@@ -7,11 +7,27 @@ import paypal from "../../assets/img/paypal.png";
 import visa from "../../assets/img/visa.png";
 import { Link, useParams } from 'react-router-dom';
 import { ProductContext } from '../../Context/ProductContext';
+import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from 'react-loading-spinner';
+import { PulseLoader } from 'react-spinners';
+import { AuthContext } from '../../Context/AuthContext';
+
 const Payment = () => {
     const [token,setToken]=useState(null);
     const [nonce,setNonce]=useState(null);
     const dropInInstance = useRef(null);
-    
+    const navigate=useNavigate();
+    const [price,setPrice]=useState(0)
+    const [back,setBack]=useState(false)
+    const {user,dispatch}=useContext(AuthContext);
+
+  
+   
+
+  const Back=useCallback(()=>{
+
+  navigate('/');},[])
+
     const { product, productDispatch,productContext,productListDispatch } = useContext(ProductContext);
        const {quantity}=useParams();
        const {productId}=useParams();
@@ -20,6 +36,18 @@ const Payment = () => {
        productDispatch({payload:productFound})
        },[productContext])
        useEffect(()=>{console.log(product)},[product])
+
+       useEffect(()=>{
+        if(quantity!=null && product!=null){
+               if(quantity>=3){
+                setPrice(quantity*product.price - 30)
+               }
+               else{
+                setPrice(quantity*product.price)
+               }
+        }
+
+       },[product,quantity])
 
   useEffect(()=>{
     axios
@@ -66,12 +94,43 @@ const Payment = () => {
     });
     
   };
+  const ConfirmPurchase=()=>{
+    
+    
+    const Total=quantity*product.price;
+if(Total<=user.balance){
+console.log('first')
+axios
+.post('http://localhost:5555/purchase', { productId: product._id, ...user, quantityP:quantity, Total:quantity*product.price })
+.then((response) => {
+console.log(response.data.newBalance.balance)
+  
+  dispatch({ type: 'incrementBalance', payload: { balance: response.data.newBalance.balance } })
+  localStorage.setItem('user', JSON.stringify({ ...user, balance: user.balance - Total }))
+  productListDispatch({ type: 'updateOne', payload: { product, quantity: quantity } })
+  productDispatch({ payload: null })
+  setBack(true)
+  
+})
+.catch(() => {
+  
+})
+
+}else{
+setError('you can not buy , your balance is Not enough')
+
+}
+   
+  
+ 
+}
   useEffect(()=>{
     if(nonce!=null){
       axios
-      .post('http://localhost:5555/payment',{amount:230,paymentMethodNonce:nonce})
+      .post('http://localhost:5555/payment',{amount:price,paymentMethodNonce:nonce})
       .then((response)=>{
-            console.log(response)
+        ConfirmPurchase();
+            
       })
       .catch((error)=>{
            console.log(error)
@@ -79,41 +138,30 @@ const Payment = () => {
     }
   },[nonce])
 
-  const handleSubmit = () => {
-    // Send the nonce to your server-side endpoint
-    fetch('/payment', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        nonce,
-        amount: 10.00
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        console.log('Payment successful!');
-      } else {
-        console.error('Payment failed:', data.error);
-      }
-    })
-    .catch(error => {
-      console.error('Error processing payment:', error);
-    });
-  };
+  
 
   return (
-    <div  className='w-full h-screen flex flex-col justify-start items-center px-[300px] pt-[100px] bg-gray-300'>
-         {product !=null?<><div id="dropin-container"></div><div className='px-3 mt-5 flex justify-between items-center w-full'>
+    <div  className={`w-full h-screen flex flex-col  items-center px-[300px] pt-[100px] bg-gray-300 ${token && product ?'justify-start':'justify-center'}`}>
+         {  token !=null ?<>
+         <div id="dropin-container"></div>
+         {!back?
+         <div className='px-3 mt-5 flex justify-between items-center w-full'>
             <Link to={'/'} className="flex flex-col justify-center items-center py-2 bg-orange-600 w-1/6 hover:bg-orange-700 rounded-lg text-white font-bold text-xl"> 
                  Back
             </Link>
             <button onClick={handlePayment} className="flex flex-col justify-center items-center py-2 bg-black w-4/5 hover:bg-gray-700 rounded-lg text-white font-bold text-xl"> 
-                 Pay {product.price * quantity} $
+                 Pay {price} $
             </button>
-            </div></>:''} 
+            </div>:   <button 
+            onClick={Back}
+                
+                className="rounded-xl flex flex-col justify-center items-center py-2 px-6 mt-5 bg-green-500 text-white text-xl font-semibold"
+            >
+                Back!
+            </button>}
+          
+            </>:<PulseLoader color="#000" size={30} margin={8} />
+          } 
     </div>
   )
 }
