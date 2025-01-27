@@ -36,13 +36,19 @@ const ProductListe = () => {
   };
 const [index,setIndex]=useState(0);
 
-var topIndex=productList.length/8;
-topIndex=Math.floor(topIndex)
-if(productList%8==0){
+var topIndex;
 
-  topIndex--;
+var topIndexMd=productList.length/4;
+topIndex=Math.floor(topIndex)
+if(productList%4==0){
+
+  topIndexMd--;
 }
+
+
 const [maxIndex,setMaxIndex]=useState(topIndex);
+const [maxIndexMd,setMaxIndexMd]=useState(topIndexMd);
+
 useEffect(()=>{
   topIndex=productList.length/8;
   topIndex=Math.floor(topIndex)
@@ -52,8 +58,21 @@ useEffect(()=>{
         topIndex--;
 
       }
+      
   
   }
+  topIndexMd=productList.length/4;
+  topIndexMd=Math.floor(topIndexMd)
+
+  if(productList%4==0){
+      if(topIndexMd !=0){
+        topIndexMd--;
+
+      }
+      
+  
+  }
+  setMaxIndexMd(topIndexMd);
   setMaxIndex(topIndex);
   setIndex(0);
 },[productList])
@@ -66,6 +85,12 @@ const decrementIndex=()=>{
   if(index >0){
    setIndex(index-1);
   }
+}
+
+const incrementIndexMd=()=>{
+  if(index <maxIndexMd){
+    setIndex(index+1);
+   }
 }
 useEffect(()=>{console.log(index,maxIndex)},[index])
   const DisplayProduct = (index) => {
@@ -114,6 +139,66 @@ useEffect(()=>{console.log(index,maxIndex)},[index])
                       productDispatch({ payload: productList[index * 8 + i] });
                     }}
                     className="rounded-lg px-2 py-1 bg-blue-600 text-white border-black hover:bg-blue-500 hover:border-none hover:text-white"
+                  >
+                    Buy Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        }
+      } else {
+        return "";
+      }
+    });
+  };
+
+  const DisplayProductMd = (index) => {
+    return [...Array(4)].map((_, i) => {
+      if (index * 4 + i < productList.length) {
+        if (productList[index * 4 + i].quantity > 0) {
+          return (
+            <div
+              key={index * 4 + i}
+              className="col-span-1 border rounded-lg border-gray-500 pb-2 px-4"
+            >
+              <div className="flex  flex-col justify-center items-center px-2 py-3 bg-gray-50 rounded-lg relative ">
+                <img
+                  src={productList[index * 4 + i].imgUrl}
+                  className="w-[90px] h-[90px]"
+                  alt=""
+                />
+                <CiHeart className="text-lg absolute top-2 right-3" />
+                <p className="text-md absolute top-3 left-5">
+                  {productList[index * 4 + i].quantity} copy
+                </p>
+              </div>
+              <div className="w-full flex flex-col justify-start items-start pl-1">
+                <div className="flex justify-between items-center w-full pr-2 pb-1">
+                  <p className="font-semibold">
+                    {productList[index * 4 + i].name}
+                  </p>
+                  <p className="font-semibold">
+                    {productList[index * 4 + i].price} $
+                  </p>
+                </div>
+                <p className="font-semibold text-gray-700 text-sm mb-1">
+                  {productList[index * 4 + i].description}
+                </p>
+                <div className="w-full  flex justify-between items-center pr-2 pt-2">
+                  <button
+                    onClick={() => {
+                      addToCart(productList[index * 4 + i]._id);
+                    }}
+                    className="rounded-lg px-1 py-1 bg-white text-black border  border-black hover:bg-orange-600 hover:border-none hover:text-white"
+                  >
+                    Add cart
+                  </button>
+                  <button
+                    onClick={() => {
+                      productDispatch({ payload: productList[index * 4 + i] });
+                    }}
+                    className="rounded-lg px-1 py-1 bg-blue-600 text-white border-black hover:bg-blue-500 hover:border-none hover:text-white"
                   >
                     Buy Now
                   </button>
@@ -339,15 +424,26 @@ useEffect(()=>{console.log(index,maxIndex)},[index])
             ""
           )}
         </div>
-        <div className="w-full flex justify-center items-start relative">
-        <GrNext onClick={incrementIndex} className="text-4xl absolute top-[200px] right-0 z-10 hover:text-6xl cursor-pointer"/>
+        <div className="w-full hidden lg:flex justify-center items-start relative">
+        <GrNext onClick={incrementIndex} className="md:text-2xl  lg:text-4xl absolute top-[200px] right-0 z-10 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
 
-        <div className="grid grid-cols-4 gap-x-3 mt-5 gap-y-2 pb-5 w-[90%]">
+        <div className="hidden lg:grid grid-cols-4 gap-x-3 mt-5 gap-y-2 pb-5 w-[90%]">
           {productList.length > 0 ? DisplayProduct(index) : ""}
         </div>
-        <GrPrevious onClick={decrementIndex} className="text-4xl absolute top-[200px] z-10 left-0 hover:text-6xl cursor-pointer"/>
+       
+        <GrPrevious onClick={decrementIndex} className="md:text-2xl  lg:text-4xl absolute top-[200px] z-10 left-0 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
 
         </div>
+        <div className="w-full hidden md:flex lg:hidden justify-center items-start relative">
+        <GrNext onClick={incrementIndexMd} className="md:text-2xl  lg:text-4xl absolute top-[200px] right-0 z-10 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
+
+        <div className="hidden md:grid lg:hidden grid-cols-2 gap-x-3 mt-5 gap-y-2 pb-5 w-[90%]">
+          {productList.length > 0 ? DisplayProductMd(index) : ""}
+        </div>
+        <GrPrevious onClick={decrementIndex} className="md:text-2xl  lg:text-4xl absolute top-[200px] z-10 left-0 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
+
+          </div>
+       
       
       </div>
     </div>
