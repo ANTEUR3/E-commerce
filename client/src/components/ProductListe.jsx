@@ -35,6 +35,8 @@ const ProductListe = () => {
       });
   };
 const [index,setIndex]=useState(0);
+const [indexMd,setIndexMd]=useState(0);
+
 
 var topIndex;
 
@@ -88,9 +90,13 @@ const decrementIndex=()=>{
 }
 
 const incrementIndexMd=()=>{
-  if(index <maxIndexMd){
-    setIndex(index+1);
+  if(indexMd <maxIndexMd){
+    setIndexMd(indexMd+1);
    }
+}
+const decrementIndexMd=()=>{
+  if(indexMd >0){
+setIndexMd(indexMd-1)  }
 }
 useEffect(()=>{console.log(index,maxIndex)},[index])
   const DisplayProduct = (index) => {
@@ -438,9 +444,9 @@ useEffect(()=>{console.log(index,maxIndex)},[index])
         <GrNext onClick={incrementIndexMd} className="md:text-2xl  lg:text-4xl absolute top-[200px] right-0 z-10 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
 
         <div className="hidden md:grid lg:hidden grid-cols-2 gap-x-3 mt-5 gap-y-2 pb-5 w-[90%]">
-          {productList.length > 0 ? DisplayProductMd(index) : ""}
+          {productList.length > 0 ? DisplayProductMd(indexMd) : ""}
         </div>
-        <GrPrevious onClick={decrementIndex} className="md:text-2xl  lg:text-4xl absolute top-[200px] z-10 left-0 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
+        <GrPrevious onClick={decrementIndexMd} className="md:text-2xl  lg:text-4xl absolute top-[200px] z-10 left-0 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
 
           </div>
        
