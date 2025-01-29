@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useMemo, useState,useCallback } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import { ProductContext } from "../Context/ProductContext";
 import { useEffect } from "react";
@@ -36,6 +36,8 @@ const ProductListe = () => {
   };
 const [index,setIndex]=useState(0);
 const [indexMd,setIndexMd]=useState(0);
+const [indexSm,setIndexSm]=useState(0);
+
 
 
 var topIndex;
@@ -50,6 +52,8 @@ if(productList%4==0){
 
 const [maxIndex,setMaxIndex]=useState(topIndex);
 const [maxIndexMd,setMaxIndexMd]=useState(topIndexMd);
+const [maxIndexSm,setMaxIndexSm]=useState(0);
+
 
 useEffect(()=>{
   topIndex=productList.length/8;
@@ -98,6 +102,18 @@ const decrementIndexMd=()=>{
   if(indexMd >0){
 setIndexMd(indexMd-1)  }
 }
+
+const incrementIndexSm=()=>{
+  if(indexSm <maxIndexSm){
+    setIndexSm(indexSm+1);
+   }
+}
+const decrementIndexSm=()=>{
+  if(indexSm >0){
+setIndexSm(indexSm-1)  }
+}
+
+
 useEffect(()=>{console.log(index,maxIndex)},[index])
   const DisplayProduct = (index) => {
     return [...Array(8)].map((_, i) => {
@@ -218,6 +234,72 @@ useEffect(()=>{console.log(index,maxIndex)},[index])
       }
     });
   };
+
+const [existProducts,setExistProducts]=useState([]);
+  useEffect(()=>{
+    const CexistProducts=productContext.filter((product)=>product.quantity>0);
+    setExistProducts(CexistProducts);
+
+   
+  },[productContext])
+  useEffect(()=>{ setMaxIndexSm(existProducts.length-1)},[existProducts])
+  const DisplayProductSm = (index) => {
+    console.log(index)
+          return (
+            <div
+              key={index}
+              className="col-span-1 border rounded-lg border-gray-500 pb-2 px-4"
+            >
+              <div className="flex  flex-col justify-center items-center px-2 py-3 bg-gray-50 rounded-lg relative ">
+                <img
+                  src={existProducts[index].imgUrl}
+                  className="w-[90px] h-[90px]"
+                  alt=""
+                />
+                <CiHeart className="text-md md:text-lg absolute  top-1 md:top-2 right-1 md:right-3" />
+                <p className="text-sm md:text-md absolute top-1 left-1 md:top-3 md:left-5">
+                  {existProducts[index].quantity} copy
+                </p>
+              </div>
+              <div className="w-full flex flex-col justify-start items-start pl-1">
+                <div className="flex justify-between items-center w-full pr-2 pb-1">
+                  <p className="font-semibold">
+                    {existProducts[index].name}
+                  </p>
+                  <p className="font-semibold">
+                    {existProducts[index].price} $
+                  </p>
+                </div>
+                <p className="font-semibold text-gray-700 text-sm mb-1">
+                  {existProducts[index].description}
+                </p>
+                <div className="w-full  flex justify-between items-center pr-2 pt-2">
+                  <button
+                    onClick={() => {
+                      addToCart(existProducts[index]._id);
+                    }}
+                    className="rounded-lg px-1 py-1 bg-white text-black border  border-black hover:bg-orange-600 hover:border-none hover:text-white"
+                  >
+                    Add cart
+                  </button>
+                  <button
+                    onClick={() => {
+                      productDispatch({ payload: existProducts[index] });
+                    }}
+                    className="rounded-lg px-1 py-1 bg-blue-600 text-white border-black hover:bg-blue-500 hover:border-none hover:text-white"
+                  >
+                    Buy Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        
+      
+    
+  };
+
+
   useEffect(()=>{console.log(productContext)},[productContext])
   const [productType, setProductType] = useState("all");
   useEffect(() => {
@@ -447,6 +529,15 @@ useEffect(()=>{console.log(index,maxIndex)},[index])
           {productList.length > 0 ? DisplayProductMd(indexMd) : ""}
         </div>
         <GrPrevious onClick={decrementIndexMd} className="md:text-2xl  lg:text-4xl absolute top-[200px] z-10 left-0 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
+
+          </div>
+          <div className="w-full flex md:hidden justify-center items-start relative">
+        <GrNext onClick={incrementIndexSm} className="md:text-2xl  lg:text-4xl absolute top-[200px] right-0 z-10 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
+
+        <div className="grid md:hidden grid-cols-1 gap-x-3 mt-5 gap-y-2 pb-5 w-[80%]">
+          {existProducts.length > 0 ? DisplayProductSm(indexSm) : ""}
+        </div>
+        <GrPrevious onClick={decrementIndexSm} className="md:text-2xl  lg:text-4xl absolute top-[200px] z-10 left-0 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
 
           </div>
        
