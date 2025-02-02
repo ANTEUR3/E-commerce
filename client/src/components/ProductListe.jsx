@@ -103,6 +103,8 @@ const decrementIndexMd=()=>{
 setIndexMd(indexMd-1)  }
 }
 
+
+
 const incrementIndexSm=()=>{
   if(indexSm <maxIndexSm){
     setIndexSm(indexSm+1);
@@ -531,13 +533,13 @@ const [existProducts,setExistProducts]=useState([]);
         <GrPrevious onClick={decrementIndexMd} className="md:text-2xl  lg:text-4xl absolute top-[200px] z-10 left-0 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
 
           </div>
-          <div className="w-full flex md:hidden justify-center items-start relative">
-        <GrNext onClick={incrementIndexSm} className="md:text-2xl  lg:text-4xl absolute top-[200px] right-0 z-10 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
+          <div className="w-full flex md:hidden justify-center items-center relative border-2">
+        <GrNext onClick={incrementIndexSm} className="md:text-2xl  lg:text-4xl absolute top-[50%] -translate-y-[50%] right-0 z-10 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
 
         <div className="grid md:hidden grid-cols-1 gap-x-3 mt-5 gap-y-2 pb-5 w-[80%]">
           {existProducts.length > 0 ? DisplayProductSm(indexSm) : ""}
         </div>
-        <GrPrevious onClick={decrementIndexSm} className="md:text-2xl  lg:text-4xl absolute top-[200px] z-10 left-0 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
+        <GrPrevious onClick={decrementIndexSm} className="md:text-2xl  lg:text-4xl absolute top-[50%] -translate-y-[50%] z-10 left-0 md:hover:text-4xl lg:hover:text-6xl cursor-pointer"/>
 
           </div>
        

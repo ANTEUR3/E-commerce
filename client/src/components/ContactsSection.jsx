@@ -5,9 +5,9 @@ import { FaClock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 const ContactsSection = () => {
   return (
-    <div className="flex justify-center items-center gap-x-4 pb-5 pt-8 bg-blue-100 mt-5 h-screen relative " id="contacts">
-        <p className="text-2xl font-black absolute top-10 ">Contact our friendly team</p>
-      <div className="w-1/3 pb-4">
+    <div className="flex justify-between lg:justify-center  items-center gap-x-4 md:py-[70px] lg:pb-5 lg:pt-8  bg-blue-100 mt-5 lg:h-screen  relative md:px-[50px] lg:px-0" id="contacts">
+        <p className="text-lg  md:text-xl lg:text-2xl font-black absolute top-10 left-[50%] -translate-x-[50%] ">Contact our friendly team</p>
+      <div className=" pb-4 ">
         <p className="text-2xl font-bold mb-2">Get in Touch</p>
         <p className="text-gray-400 font-semibold w-2/3">
           contact our friendly team troght email , phone or show our real
@@ -66,7 +66,7 @@ const ContactsSection = () => {
             </div>
         </div>
       </div>
-      <div className="pt-4 px-3 pb-8 bg-white w-1/3 rounded-xl">
+      <div className="pt-4 px-3 pb-8 bg-white  lg:w-1/3 rounded-xl">
         <p className="text-xl font-bold pb-7">Send Message</p>
         <div className="w-full flex flex-col justify-start items-start pb-5 gap-y-3">
             <input type="text" className=" w-full px-3 pb-1 pt-2 font-fontAY2 border-b text-sm border-gray-300"placeholder="Your Name" />

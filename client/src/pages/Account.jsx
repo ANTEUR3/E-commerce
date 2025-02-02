@@ -29,6 +29,7 @@ import axios from "axios";
 import PurchaseConfirmation from "../components/PurchaseConfirmation";
 import NavBarè from "../components/NavBarè";
 import ProductBrows from "../components/purchase/productBrows";
+import MdSmNavbar from "../components/MdSmNavbar";
 
 const Account = () => {
   const [confirm,setConfirm]=useState(false);
@@ -85,6 +86,7 @@ const Account = () => {
         <div>
 
          <NavBarè/>
+         <MdSmNavbar/>
           <div className="w-full px-10 pt-3 ">
             <div className="w-full   bg-gray-100 pr-10 pl-20 relative ">
               <div className="w-[95%]  flex justify-between items-center">

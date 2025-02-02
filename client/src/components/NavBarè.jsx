@@ -46,7 +46,7 @@ const NavBarè = () => {
 
 
   return (
-    <div className='w-full'>
+    <div className='w-full hidden lg:block'>
          <div className="w-full py-1 px-10 bg-blue-800 flex justify-between items-center ">
             <div className="flex justify-start items-center gap-x-2">
               <FaPhone className="text-white text-md" />
